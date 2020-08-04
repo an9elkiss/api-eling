@@ -24,4 +24,24 @@
 		);
 	</select>
 	
+	<select id="findPhrases"  resultType = "com.an9elkiss.api.eling.model.Phrase" >
+		SELECT *
+		FROM t_phrase
+		WHERE word_id IN (
+			<foreach collection="wordIds" item="wordId" index="index" separator="," >  
+                #{wordId} 
+            </foreach>
+		);
+	</select>
+	
+	<select id="findSentences"  resultType = "com.an9elkiss.api.eling.model.Sentence" >
+		SELECT *
+		FROM t_sentence
+		WHERE word_id IN (
+			<foreach collection="wordIds" item="wordId" index="index" separator="," >  
+                #{wordId} 
+            </foreach>
+		);
+	</select>
+	
 </mapper>

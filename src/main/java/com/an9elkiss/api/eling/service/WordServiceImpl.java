@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.an9elkiss.api.eling.command.WordCmd;
 import com.an9elkiss.api.eling.command.WordTagCmd;
 import com.an9elkiss.api.eling.dao.WordDao;
+import com.an9elkiss.api.eling.model.Phrase;
+import com.an9elkiss.api.eling.model.Sentence;
 import com.an9elkiss.api.eling.model.Word;
 import com.an9elkiss.commons.command.ApiResponseCmd;
 
@@ -33,12 +35,15 @@ public class WordServiceImpl implements WordService {
 			WordCmd cmd = new WordCmd();
 			cmd.setWord(word);
 			cmd.setTags(new ArrayList<String>());
+			cmd.setPhrases(new ArrayList<String>());
+			cmd.setSentences(new ArrayList<String>());
 			cmds.add(cmd);
 
 			wordIds.add(word.getId());
 		}
+		Integer[] ids = wordIds.toArray(new Integer[wordIds.size()]);
 
-		List<WordTagCmd> wordTagCmds = wordDao.findTags(wordIds.toArray(new Integer[wordIds.size()]));
+		List<WordTagCmd> wordTagCmds = wordDao.findTags(ids);
 
 		for (WordTagCmd wordTagCmd : wordTagCmds) {
 			for (WordCmd cmd : cmds) {
@@ -46,6 +51,38 @@ public class WordServiceImpl implements WordService {
 					cmd.getTags().add(wordTagCmd.getTag());
 					break;
 				}
+			}
+		}
+
+		List<Phrase> phrases = wordDao.findPhrases(ids);
+
+		for (Phrase phrase : phrases) {
+			for (WordCmd cmd : cmds) {
+				if (cmd.getWord().getId().equals(phrase.getWord_id())) {
+					cmd.getPhrases().add(phrase.getPhrase());
+					break;
+				}
+			}
+		}
+
+		List<Sentence> sentences = wordDao.findSentences(ids);
+
+		for (Sentence sentence : sentences) {
+			for (WordCmd cmd : cmds) {
+				if (cmd.getWord().getId().equals(sentence.getWord_id())) {
+					cmd.getSentences().add(sentence.getSentence());
+					break;
+				}
+			}
+		}
+
+		for (WordCmd cmd : cmds) {
+			if (cmd.getPhrases().size() == 0) {
+				cmd.setPhrases(null);
+			}
+
+			if (cmd.getSentences().size() == 0) {
+				cmd.setSentences(null);
 			}
 		}
 
