@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.an9elkiss.api.eling.dao.WordDao">
+	
+	<select id="findByScene"  resultType = "com.an9elkiss.api.eling.model.Word" >
+		SELECT w.*
+		FROM t_word w, t_scene s, t_scene_word sw
+		WHERE w.id = sw.word_id
+		AND sw.scene_id = s.id
+		AND s.scene = #{scene}
+	</select>
+	
+</mapper>
