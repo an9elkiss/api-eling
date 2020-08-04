@@ -13,4 +13,15 @@
 		AND s.scene = #{scene}
 	</select>
 	
+	<select id="findTags"  resultType = "com.an9elkiss.api.eling.command.WordTagCmd" >
+		SELECT wt.*,t.tag
+		FROM t_tag t, t_word_tag wt
+		WHERE wt.tag_id = t.id
+		AND wt.word_id IN (
+			<foreach collection="wordIds" item="wordId" index="index" separator="," >  
+                #{wordId} 
+            </foreach>
+		);
+	</select>
+	
 </mapper>
