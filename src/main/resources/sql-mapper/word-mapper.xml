@@ -5,7 +5,7 @@
 
 <mapper namespace="com.an9elkiss.api.eling.dao.WordDao">
 
-	<insert id="save" useGeneratedKeys="true" keyProperty="id"  parameterType="com.an9elkiss.api.eling.model.Word">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.an9elkiss.api.eling.model.Word">
 		INSERT INTO t_word
 		(noun,pronoun,verb,adjective,er,est,adverb,preposition,conjunction,explanation)
 		VALUES
@@ -13,6 +13,42 @@
         #{noun},#{pronoun},#{verb},#{adjective},#{er},#{est},#{adverb},#{preposition},#{conjunction},#{explanation}
 		);
 	</insert>
+	
+	<select id="find" parameterType="com.an9elkiss.api.eling.model.Word" resultType = "com.an9elkiss.api.eling.model.Word" >
+		SELECT *
+		FROM t_word
+		WHERE 1=1
+		<if test="noun!=null">
+			AND noun = #{noun}
+		</if>
+		<if test="pronoun!=null">
+			AND pronoun = #{pronoun}
+		</if>
+		<if test="verb!=null">
+			AND verb = #{verb}
+		</if>
+		<if test="adjective!=null">
+			AND adjective = #{adjective}
+		</if>
+		<if test="er!=null">
+			AND er = #{er}
+		</if>
+		<if test="est!=null">
+			AND est = #{est}
+		</if>
+		<if test="adverb!=null">
+			AND adverb = #{adverb}
+		</if>
+		<if test="preposition!=null">
+			AND preposition = #{preposition}
+		</if>
+		<if test="conjunction!=null">
+			AND conjunction = #{conjunction}
+		</if>
+		<if test="explanation!=null">
+			AND explanation = #{explanation}
+		</if>
+	</select>
 	
 	<select id="findByScene"  resultType = "com.an9elkiss.api.eling.model.Word" >
 		SELECT w.*

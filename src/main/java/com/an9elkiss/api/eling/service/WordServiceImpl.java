@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.an9elkiss.api.eling.command.WordCmd;
 import com.an9elkiss.api.eling.command.WordTagCmd;
+import com.an9elkiss.api.eling.dao.TagDao;
 import com.an9elkiss.api.eling.dao.WordDao;
 import com.an9elkiss.api.eling.model.Phrase;
 import com.an9elkiss.api.eling.model.Sentence;
+import com.an9elkiss.api.eling.model.Tag;
 import com.an9elkiss.api.eling.model.Word;
 import com.an9elkiss.commons.command.ApiResponseCmd;
 
@@ -23,6 +25,8 @@ public class WordServiceImpl implements WordService {
 	@Autowired
 	private WordDao wordDao;
 
+	@Autowired
+	private TagDao tagDao;
 
 	@Override
 	public ApiResponseCmd<List<WordCmd>> findByScene(String scene) {
@@ -93,6 +97,31 @@ public class WordServiceImpl implements WordService {
 	public ApiResponseCmd<Object> save(WordCmd cmd) {
 
 		wordDao.save(cmd.getWord());
+		Word word = wordDao.find(cmd.getWord());
+		log.debug("新建word, id = {}", word.getId());
+
+		if (cmd.getTags() != null) {
+
+			List<Tag> tags = tagDao.findByTags(cmd.getTags());
+			for (String t : cmd.getTags()) {
+				boolean isTagExist = false;
+				for (Tag tag : tags) {
+					if (tag.getTag().equals(t)) {
+						// save word_tag
+						isTagExist = true;
+						break;
+					}
+				}
+
+				if (isTagExist) {
+					continue;
+				}
+				// save tag
+				// find tag
+				// save word_tag
+			}
+		}
+
 
 		return ApiResponseCmd.success();
 	}

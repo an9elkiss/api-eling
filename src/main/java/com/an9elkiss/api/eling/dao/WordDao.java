@@ -15,6 +15,8 @@ public interface WordDao {
 
 	int save(Word word);
 
+	Word find(Word word);
+
 	List<Word> findByScene(String scene);
 
 	List<WordTagCmd> findTags(@Param("wordIds") Integer[] wordIds);
