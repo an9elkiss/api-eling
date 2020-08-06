@@ -89,6 +89,12 @@ public class WordServiceImpl implements WordService {
 		return ApiResponseCmd.success(cmds);
 	}
 
+	@Override
+	public ApiResponseCmd<Object> save(WordCmd cmd) {
 
+		wordDao.save(cmd.getWord());
+
+		return ApiResponseCmd.success();
+	}
 
 }

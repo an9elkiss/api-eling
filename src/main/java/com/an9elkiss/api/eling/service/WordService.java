@@ -9,4 +9,6 @@ public interface WordService {
 
 	ApiResponseCmd<List<WordCmd>> findByScene(String scene);
 
+	ApiResponseCmd<Object> save(WordCmd cmd);
+
 }

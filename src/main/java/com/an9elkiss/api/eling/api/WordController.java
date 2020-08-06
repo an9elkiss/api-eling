@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.an9elkiss.api.eling.command.WordCmd;
 import com.an9elkiss.api.eling.command.WordReq;
 import com.an9elkiss.api.eling.service.WordService;
 import com.an9elkiss.commons.command.ApiResponseCmd;
@@ -20,10 +21,14 @@ public class WordController {
 	private WordService wordService;
 
 	@RequestMapping(value = "/word/find", produces = { "application/json" }, method = RequestMethod.POST)
-	public ApiResponseCmd<?> fetch(@RequestBody WordReq cmd) {
+	public ApiResponseCmd<?> find(@RequestBody WordReq cmd) {
 
 		return wordService.findByScene(cmd.getScene());
     }
 
+	@RequestMapping(value = "/word/save", produces = { "application/json" }, method = RequestMethod.POST)
+	public ApiResponseCmd<?> save(@RequestBody WordCmd cmd) {
 
+		return wordService.save(cmd);
+	}
 }

@@ -13,6 +13,8 @@ import com.an9elkiss.api.eling.model.Word;
 @Mapper
 public interface WordDao {
 
+	int save(Word word);
+
 	List<Word> findByScene(String scene);
 
 	List<WordTagCmd> findTags(@Param("wordIds") Integer[] wordIds);
