@@ -25,4 +25,8 @@ public interface WordDao {
 
 	List<Sentence> findSentences(@Param("wordIds") Integer[] wordIds);
 
+	int savePhrases(@Param("phrases") List<String> phrases, @Param("wordId") Integer wordId);
+
+	int saveSentences(@Param("sentences") List<String> sentences, @Param("wordId") Integer wordId);
+
 }

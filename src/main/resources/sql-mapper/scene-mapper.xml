@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.an9elkiss.api.eling.dao.SceneDao">
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_scene
+		(scene)
+		VALUES
+		(#{scene});
+	</insert>
+
+	<select id="findByScene"  resultType = "com.an9elkiss.api.eling.model.Scene" >
+		SELECT *
+		FROM t_scene
+		WHERE scene = #{scene};
+	</select>
+	
+	<insert id="saveSceneWord">
+		INSERT INTO t_scene_word
+		(word_id, scene_id)
+		VALUES
+		(
+        #{wordId},#{sceneId}
+		);
+	</insert>
+</mapper>

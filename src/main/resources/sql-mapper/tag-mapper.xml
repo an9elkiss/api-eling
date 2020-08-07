@@ -9,9 +9,7 @@
 		INSERT INTO t_tag
 		(tag)
 		VALUES
-		(
-        #{tag}
-		);
+		(#{tag});
 	</insert>
 
 	<select id="findByTags"  resultType = "com.an9elkiss.api.eling.model.Tag" >

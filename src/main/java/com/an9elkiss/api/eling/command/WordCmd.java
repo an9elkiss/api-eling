@@ -11,6 +11,7 @@ import lombok.Data;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class WordCmd {
 	private Word word;
+	private String scene;
 	private List<String> tags;
 	private List<String> phrases;
 	private List<String> sentences;

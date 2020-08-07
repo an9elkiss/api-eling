@@ -89,4 +89,24 @@
 		);
 	</select>
 	
+	<insert id="savePhrases" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_phrase
+		(phrase,word_id)
+		VALUES
+       	<foreach collection="phrases" item="phrase" index="index" separator="," >  
+            (#{phrase},#{wordId})
+        </foreach>
+		;
+	</insert>
+	
+	<insert id="saveSentences" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_sentence
+		(sentence,word_id)
+		VALUES
+       	<foreach collection="sentences" item="sentence" index="index" separator="," >  
+            (#{sentence},#{wordId})
+        </foreach>
+		;
+	</insert>
+	
 </mapper>

@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.an9elkiss.api.eling.command.WordCmd;
 import com.an9elkiss.api.eling.command.WordTagCmd;
+import com.an9elkiss.api.eling.dao.SceneDao;
 import com.an9elkiss.api.eling.dao.TagDao;
 import com.an9elkiss.api.eling.dao.WordDao;
 import com.an9elkiss.api.eling.model.Phrase;
+import com.an9elkiss.api.eling.model.Scene;
 import com.an9elkiss.api.eling.model.Sentence;
 import com.an9elkiss.api.eling.model.Tag;
 import com.an9elkiss.api.eling.model.Word;
@@ -29,6 +31,9 @@ public class WordServiceImpl implements WordService {
 
 	@Autowired
 	private TagDao tagDao;
+
+	@Autowired
+	private SceneDao sceneDao;
 
 	@Override
 	public ApiResponseCmd<List<WordCmd>> findByScene(String scene) {
@@ -103,6 +108,17 @@ public class WordServiceImpl implements WordService {
 		Word word = wordDao.find(cmd.getWord());
 		log.debug("新建word, id = {}", word.getId());
 
+		if (cmd.getScene() != null) {
+
+			Scene scene = sceneDao.findByScene(cmd.getScene());
+			if (scene != null) {
+				sceneDao.saveSceneWord(scene.getId(), word.getId());
+			} else {
+				sceneDao.save(cmd.getScene());
+				sceneDao.saveSceneWord(sceneDao.findByScene(cmd.getScene()).getId(), word.getId());
+			}
+		}
+
 		if (cmd.getTags() != null && !cmd.getTags().isEmpty()) {
 
 			List<Tag> tags = tagDao.findByTags(cmd.getTags());
@@ -124,6 +140,13 @@ public class WordServiceImpl implements WordService {
 			}
 		}
 
+		if (cmd.getPhrases() != null && !cmd.getPhrases().isEmpty()) {
+			wordDao.savePhrases(cmd.getPhrases(), word.getId());
+		}
+
+		if (cmd.getSentences() != null && !cmd.getSentences().isEmpty()) {
+			wordDao.saveSentences(cmd.getSentences(), word.getId());
+		}
 
 		return ApiResponseCmd.success();
 	}
