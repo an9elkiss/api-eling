@@ -5,6 +5,15 @@
 
 <mapper namespace="com.an9elkiss.api.eling.dao.TagDao">
 
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_tag
+		(tag)
+		VALUES
+		(
+        #{tag}
+		);
+	</insert>
+
 	<select id="findByTags"  resultType = "com.an9elkiss.api.eling.model.Tag" >
 		SELECT *
 		FROM t_tag
@@ -14,5 +23,14 @@
             </foreach>
 		);
 	</select>
+	
+	<insert id="saveWordTag">
+		INSERT INTO t_word_tag
+		(word_id, tag_id)
+		VALUES
+		(
+        #{wordId},#{tagId}
+		);
+	</insert>
 	
 </mapper>

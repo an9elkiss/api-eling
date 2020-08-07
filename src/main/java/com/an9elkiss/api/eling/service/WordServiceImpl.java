@@ -1,10 +1,12 @@
 package com.an9elkiss.api.eling.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.an9elkiss.api.eling.command.WordCmd;
 import com.an9elkiss.api.eling.command.WordTagCmd;
@@ -94,20 +96,21 @@ public class WordServiceImpl implements WordService {
 	}
 
 	@Override
+	@Transactional
 	public ApiResponseCmd<Object> save(WordCmd cmd) {
 
 		wordDao.save(cmd.getWord());
 		Word word = wordDao.find(cmd.getWord());
 		log.debug("新建word, id = {}", word.getId());
 
-		if (cmd.getTags() != null) {
+		if (cmd.getTags() != null && !cmd.getTags().isEmpty()) {
 
 			List<Tag> tags = tagDao.findByTags(cmd.getTags());
 			for (String t : cmd.getTags()) {
 				boolean isTagExist = false;
 				for (Tag tag : tags) {
 					if (tag.getTag().equals(t)) {
-						// save word_tag
+						tagDao.saveWordTag(word.getId(), tag.getId());
 						isTagExist = true;
 						break;
 					}
@@ -116,9 +119,8 @@ public class WordServiceImpl implements WordService {
 				if (isTagExist) {
 					continue;
 				}
-				// save tag
-				// find tag
-				// save word_tag
+				tagDao.save(t);
+				tagDao.saveWordTag(word.getId(), tagDao.findByTags(Arrays.asList(t)).get(0).getId());
 			}
 		}
 

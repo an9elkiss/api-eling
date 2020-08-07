@@ -10,8 +10,11 @@ import com.an9elkiss.api.eling.model.Tag;
 @Mapper
 public interface TagDao {
 
+	int save(@Param("tag") String tag);
 
 	List<Tag> findByTags(@Param("tags") List<String> tags);
+
+	int saveWordTag(@Param("wordId") Integer wordId, @Param("tagId") Integer tagId);
 
 
 }
