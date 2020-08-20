@@ -7,10 +7,10 @@
 
 	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.an9elkiss.api.eling.model.Word">
 		INSERT INTO t_word
-		(noun,pronoun,verb,adjective,er,est,adverb,preposition,conjunction,explanation)
+		(noun,pronoun,verb,ed,adjective,er,est,adverb,preposition,conjunction,explanation)
 		VALUES
 		(
-        #{noun},#{pronoun},#{verb},#{adjective},#{er},#{est},#{adverb},#{preposition},#{conjunction},#{explanation}
+        #{noun},#{pronoun},#{verb},#{ed},#{adjective},#{er},#{est},#{adverb},#{preposition},#{conjunction},#{explanation}
 		);
 	</insert>
 	

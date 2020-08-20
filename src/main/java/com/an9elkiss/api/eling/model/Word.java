@@ -11,6 +11,7 @@ public class Word {
 	private String noun;
 	private String pronoun;
 	private String verb;
+	private String ed;
 	private String adjective;
 	private String er;
 	private String est;
